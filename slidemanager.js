@@ -75,6 +75,10 @@ class SlideManager {
 		return prevSlide;
 	}
 
+	getCurrentSlide() {
+		return this.slides[this.currentIndex];
+	}
+
 	next() {
 		let nextSlide = this.getNextSlide();
 		if (!nextSlide) {
@@ -108,7 +112,7 @@ class SlideManager {
 	}
 
 	open() {
-		let currentSlide = this.slides[this.currentIndex];
+		let currentSlide = this.getCurrentSlide();
 		try {
 			currentSlide.open();
 		} catch (TypeError) {
@@ -117,7 +121,7 @@ class SlideManager {
 	}
 
 	close() {
-		let currentSlide = this.slides[this.currentIndex];
+		let currentSlide = this.getCurrentSlide();
 		try {
 			currentSlide.close();
 		} catch (TypeError) {
