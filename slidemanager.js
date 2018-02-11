@@ -107,6 +107,24 @@ class SlideManager {
 		}
 	}
 
+	open() {
+		let currentSlide = this.slides[this.currentIndex];
+		try {
+			currentSlide.open();
+		} catch (TypeError) {
+			console.warn("'open' unimplemented.");
+		}
+	}
+
+	close() {
+		let currentSlide = this.slides[this.currentIndex];
+		try {
+			currentSlide.close();
+		} catch (TypeError) {
+			console.warn("'close' unimplemented.");
+		}
+	}
+
 }
 
 
