@@ -9,14 +9,30 @@ let defaultConfig = {
 class Slide {
 	constructor() {
 		this.template = "";
+		this.hasRendered = false;
 	}
 
 	open() {
 		console.log(`Opening ${ this.index !== undefined ? this.index : '' }`);
+		if (!this.hasRendered) {
+			this.render();
+		}
+		this.execute();
 	}
 
 	close() {
 		console.log(`Closing ${ this.index !== undefined ? this.index : '' }`);
+	}
+
+	render() {
+		console.log('rendering...');
+		this.rendered = this.template;
+		this.hasRendered = true;
+		return this.rendered;
+	}
+
+	execute() {
+		console.log('executing...');
 	}
 }
 
@@ -26,13 +42,21 @@ class SlideManager {
 		this.slides = slides || [];
 		this.config = Object.assign({}, defaultConfig, config);
 
-		this.slides.forEach((slide, i) => { slide.index = i; });
+		this.slides.forEach((slide, i) => {
+			slide.index = i;
+			if (!this.config.lazyLoad) {
+				slide.render();
+			}
+		});
 		this.currentIndex = 0;
 	}
 
 	addSlide(slide) {
 		this.slides.push(slide);
 		slide.index = this.slides.length - 1;
+		if (!this.config.lazyLoad) {
+			slide.render();
+		}
 	}
 
 	getNextSlide() {
